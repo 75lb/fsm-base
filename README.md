@@ -4,7 +4,7 @@
 ```js
 var StateMachine = require("fsm-base")
 
-class MyClass extends StateMachine {
+class Stateful extends StateMachine {
 	super({
 		validMoves: [
 			{ from: "one", to: "two" },
@@ -16,16 +16,16 @@ class MyClass extends StateMachine {
 	})
 }
 
-my obj = new MyClass()
-obj._setState("two") // valid state change
-obj._setState("four"); // throws - invalid state change
+my instance = new Stateful()
+instance._setState("two") // valid state change
+instance._setState("four"); // throws - invalid state change
 ```
 
 * [fsm-base](#module_fsm-base)
   * [StateMachine](#exp_module_fsm-base--StateMachine) ⇐ <code>EventEmitter</code> ⏏
     * [._setState(state, emitArgs)](#module_fsm-base--StateMachine+_setState)
     * ["state" (state, prev, ...emitArgs)](#module_fsm-base--StateMachine+event_state)
-    * ["<state value>" (...emitArgs)](#module_fsm-base--StateMachine+event_<state value>)
+    * ["&lt;state value&gt;" (...emitArgs)](#module_fsm-base--StateMachine+event_&lt;state value&gt;)
 
 <a name="exp_module_fsm-base--StateMachine"></a>
 ### StateMachine ⇐ <code>EventEmitter</code> ⏏
@@ -56,8 +56,8 @@ fired on every state change
 | prev | <code>string</code> | the previous state |
 | ...emitArgs | <code>\*</code> | arbitrary args |
 
-<a name="module_fsm-base--StateMachine+event_<state value>"></a>
-#### "<state value>" (...emitArgs)
+<a name="module_fsm-base--StateMachine+event_&lt;state value&gt;"></a>
+#### "&lt;state value&gt;" (...emitArgs)
 fired on every state change
 
 **Kind**: event emitted by <code>[StateMachine](#exp_module_fsm-base--StateMachine)</code>  
