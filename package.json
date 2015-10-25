@@ -1,0 +1,24 @@
+{
+  "name": "fsm-base",
+  "author": "Lloyd Brookes <75pound@gmail.com>",
+  "version": "0.0.0",
+  "description": "Finite state machine base class",
+  "repository": "",
+  "main": "./lib/fsm-base.js",
+  "keywords": [],
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "tape test/*.js",
+    "docs": "jsdoc2md lib/*.js -l js > README.md; echo"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^1.0.3",
+    "tape": "^4.0.0"
+  },
+  "dependencies": {
+    "array-back": "^1.0.2",
+    "array-flatten": "^1.1.1"
+  }
+}
