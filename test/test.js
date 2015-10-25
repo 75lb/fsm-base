@@ -6,7 +6,7 @@ test('summary', function (t) {
   var validMoves = [
     { from: 'one', to: 'two' },
     { from: 'two', to: 'three' },
-    { from: [ 'one', 'three' ], to: 'four'}
+    { from: [ 'one', 'three' ], to: 'four' }
   ]
 
   var sm = new StateMachine({
