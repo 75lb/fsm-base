@@ -1,11 +1,17 @@
 {
   "name": "fsm-base",
   "author": "Lloyd Brookes <75pound@gmail.com>",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Finite state machine base class",
   "repository": "https://github.com/75lb/fsm-base",
   "main": "./lib/fsm-base.js",
-  "keywords": [ "finite", "state", "machine", "base", "class" ],
+  "keywords": [
+    "finite",
+    "state",
+    "machine",
+    "base",
+    "class"
+  ],
   "engines": {
     "node": ">=0.10.0"
   },
