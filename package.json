@@ -18,7 +18,7 @@
   },
   "scripts": {
     "test": "test-runner test/*.js",
-    "docs": "jsdoc2md lib/*.js -l js > README.md; echo"
+    "docs": "jsdoc2md lib/*.js > README.md; echo"
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^3.0.0",
