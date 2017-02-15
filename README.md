@@ -13,7 +13,7 @@ class Stateful extends StateMachine {
    { from: [ 'one', 'three' ], to: 'four'}
  ])
 }
-my instance = new Stateful()
+const instance = new Stateful()
 instance.state = 'one'  // valid state change
 instance.state = 'two'  // valid state change
 instance.state = 'four' // throws - invalid state change
