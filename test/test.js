@@ -1,59 +1,54 @@
 'use strict'
-var test = require('tape')
-var StateMachine = require('../')
+const TestRunner = require('test-runner')
+const StateMachine = require('../')
+const a = require('assert')
 
-test('summary', function (t) {
-  var validMoves = [
-    { from: 'one', to: 'two' },
-    { from: 'two', to: 'three' },
-    { from: [ 'one', 'three' ], to: 'four' }
-  ]
+const runner = new TestRunner()
 
-  var sm = new StateMachine({
-    validMoves: validMoves,
-    state: 'one'
+const validMoves = [
+  { from: undefined, to: 'one' },
+  { from: 'one', to: 'two' },
+  { from: 'two', to: 'three' },
+  { from: [ 'one', 'three' ], to: 'four' }
+]
+
+runner.test('valid move', function () {
+  const sm = new StateMachine(validMoves)
+  let eventCount = 0
+
+  sm.on('state', function (state, prevState) {
+    a.strictEqual(state, 'one')
+    a.strictEqual(prevState, undefined)
+    eventCount++
   })
 
-  t.strictEqual(sm.state, 'one', 'state is one')
-
-  /* valid change to 'two' */
-  sm.once('state', function (state) {
-    if (state === 'two') t.pass("'two' state event emitted")
+  sm.on('one', function () {
+    eventCount++
   })
-  var failMessage = sm._setState('two')
-  t.strictEqual(failMessage, null, 'failMessage is null')
-  t.strictEqual(sm.state, 'two', 'state is two')
 
-  sm.removeAllListeners()
+  sm.state = 'one'
+  sm.state = 'one' // should not trigger events again
+  a.strictEqual(sm.state, 'one', 'state should be one')
+  a.strictEqual(eventCount, 2)
+})
 
-  /* invalid change to 'four' */
-  sm.once('state', function (state) {
-    if (state === 'four') t.fail("'fail' state event should not be emitted")
+runner.test('invalid move', function () {
+  const sm = new StateMachine(validMoves)
+  let eventCount = 0
+
+  sm.on('state', function (state, prevState) {
+    eventCount++
   })
-  sm.once('change', function (from, to) {
-    t.fail('change should not fire')
+
+  sm.on('one', function () {
+    eventCount++
   })
+
   try {
-    sm._setState('four')
-  } catch (e) {
-    t.strictEqual(e.message, "Can only move to 'four' from 'one' or 'three' (not 'two')", 'change to four failMessage')
+    sm.state = 'two'
+    eventCount++
+  } catch (err) {
+    a.strictEqual(err.message, "Can only move to 'two' from 'one' (not 'undefined')")
   }
-  t.strictEqual(sm.state, 'two', 'state is two')
-
-  sm.removeAllListeners()
-
-  /* valid change to 'three' */
-  sm._setState('three')
-  t.strictEqual(sm.state, 'three', 'state is three')
-
-  /* valid change to 'four' */
-  sm.once('state', function (state, prev) {
-    if (state === 'four') t.pass('"state" event fired, from three to four')
-    t.strictEqual(state, 'four', 'state is four')
-    t.strictEqual(prev, 'three', 'prev is three')
-  })
-  failMessage = sm._setState('four')
-  t.strictEqual(failMessage, null, 'failMessage is null')
-  t.strictEqual(sm.state, 'four', 'state is four')
-  t.end()
+  a.strictEqual(eventCount, 0)
 })
