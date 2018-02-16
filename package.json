@@ -1,7 +1,7 @@
 {
   "name": "fsm-base",
   "author": "Lloyd Brookes <75pound@gmail.com>",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Finite state machine base class",
   "repository": "https://github.com/75lb/fsm-base",
   "license": "MIT",
