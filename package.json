@@ -17,10 +17,15 @@
   },
   "scripts": {
     "test": "test-runner test.js",
-    "docs": "jsdoc2md index.js > README.md; echo"
+    "docs": "jsdoc2md index.js > README.md; echo",
+    "dist": "rollup -c dist/es.config.js"
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^4.0.1",
+    "rollup": "^0.56.1",
+    "rollup-plugin-commonjs": "^8.3.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-resolve": "^3.0.3",
     "test-runner": "^0.5.0"
   },
   "dependencies": {
