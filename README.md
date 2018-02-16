@@ -29,13 +29,13 @@ instance.state = 'four' // throws - invalid state change
 
 ### StateMachine ⇐ <code>EventEmitter</code> ⏏
 **Kind**: Exported class  
-**Extends:** <code>EventEmitter</code>  
+**Extends**: <code>EventEmitter</code>  
 <a name="module_fsm-base--StateMachine+state"></a>
 
 #### stateMachine.state : <code>string</code>
 The current state
 
-**Kind**: instance property of <code>[StateMachine](#exp_module_fsm-base--StateMachine)</code>  
+**Kind**: instance property of [<code>StateMachine</code>](#exp_module_fsm-base--StateMachine)  
 **Throws**:
 
 - `INVALID_MOVE` if an invalid move made
@@ -45,7 +45,7 @@ The current state
 #### "state" (state, prev)
 fired on every state change
 
-**Kind**: event emitted by <code>[StateMachine](#exp_module_fsm-base--StateMachine)</code>  
+**Kind**: event emitted by [<code>StateMachine</code>](#exp_module_fsm-base--StateMachine)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -57,4 +57,4 @@ fired on every state change
 #### "&lt;state value&gt;"
 fired on every state change
 
-**Kind**: event emitted by <code>[StateMachine](#exp_module_fsm-base--StateMachine)</code>  
+**Kind**: event emitted by [<code>StateMachine</code>](#exp_module_fsm-base--StateMachine)  
