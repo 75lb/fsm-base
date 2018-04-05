@@ -734,10 +734,9 @@ function unwrapListeners(arr) {
   return ret;
 }
 
-
-var events = Object.freeze({
-	default: EventEmitter,
-	EventEmitter: EventEmitter
+var events = /*#__PURE__*/Object.freeze({
+  default: EventEmitter,
+  EventEmitter: EventEmitter
 });
 
 /**
@@ -850,9 +849,9 @@ arrayFlatten.from = from;
 arrayFlatten.depth = depth;
 arrayFlatten.fromDepth = fromDepth;
 
-var require$$0$1 = ( events && EventEmitter ) || events;
+var require$$0 = ( events && EventEmitter ) || events;
 
-const EventEmitter$2 = require$$0$1.EventEmitter;
+const EventEmitter$1 = require$$0.EventEmitter;
 
 /**
  * @module fsm-base
@@ -881,7 +880,7 @@ const _state = new WeakMap();
  * @alias module:fsm-base
  * @extends {EventEmitter}
  */
-class StateMachine extends EventEmitter$2 {
+class StateMachine extends EventEmitter$1 {
   constructor (validMoves) {
     super();
 
