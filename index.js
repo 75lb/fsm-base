@@ -1,4 +1,3 @@
-'use strict'
 const arrayify = require('array-back')
 const EventEmitter = require('events').EventEmitter
 
