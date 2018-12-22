@@ -1,5 +1,5 @@
-const arrayify = require('array-back')
-const EventEmitter = require('events').EventEmitter
+import Emitter from './node_modules/obso/emitter.mjs'
+import arrayify from './node_modules/array-back/index.mjs'
 
 /**
  * @module fsm-base
@@ -26,9 +26,9 @@ const _state = new WeakMap()
 /**
  * @class
  * @alias module:fsm-base
- * @extends {EventEmitter}
+ * @extends {Emitter}
  */
-class StateMachine extends EventEmitter {
+class StateMachine extends Emitter {
   constructor (validMoves) {
     super()
 
@@ -82,11 +82,10 @@ class StateMachine extends EventEmitter {
       }
     })
     if (!moved) {
-      const flatten = require('array-flatten')
       let froms = this._validMoves
         .filter(move => move.to.indexOf(state) > -1)
         .map(move => move.from.map(from => `'${from}'`))
-      froms = flatten(froms)
+        .reduce(flatten)
       const msg = `Can only move to '${state}' from ${froms.join(' or ') || '<unspecified>'} (not '${prevState}')`
       const err = new Error(msg)
       err.name = 'INVALID_MOVE'
@@ -95,4 +94,8 @@ class StateMachine extends EventEmitter {
   }
 }
 
-module.exports = StateMachine
+function flatten (prev, curr) {
+  return prev.concat(curr)
+}
+
+export default StateMachine
