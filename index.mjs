@@ -1,4 +1,4 @@
-import Emitter from './node_modules/obso/emitter.mjs'
+import Emitter from './node_modules/obso/index.mjs'
 import arrayify from './node_modules/array-back/index.mjs'
 
 /**
