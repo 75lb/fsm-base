@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "test": "test-runner test.js",
-    "docs": "jsdoc2md -t README.hbs index.js > README.md; echo",
+    "docs": "jsdoc2md -c dist/jsdoc.conf -t README.hbs index.mjs > README.md; echo",
     "dist": "rollup -c dist/index.config.js"
   },
   "devDependencies": {

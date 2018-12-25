@@ -4,20 +4,17 @@
 [![Dependency Status](https://david-dm.org/75lb/fsm-base.svg)](https://david-dm.org/75lb/fsm-base)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
-<a name="module_fsm-base"></a>
-
 ## fsm-base
-**Example**  
+
 ```js
 const StateMachine = require('fsm-base')
-
 class Stateful extends StateMachine {
- super([
-   { from: undefined, to: 'one' },
-   { from: 'one', to: 'two' },
-   { from: 'two', to: 'three' },
-   { from: [ 'one', 'three' ], to: 'four'}
- ])
+super([
+  { from: undefined, to: 'one' },
+  { from: 'one', to: 'two' },
+  { from: 'two', to: 'three' },
+  { from: [ 'one', 'three' ], to: 'four'}
+])
 }
 const instance = new Stateful()
 instance.state = 'one'  // valid state change
@@ -25,17 +22,22 @@ instance.state = 'two'  // valid state change
 instance.state = 'four' // throws - invalid state change
 ```
 
+<a name="module_fsm-base"></a>
+
+## fsm-base
+
 * [fsm-base](#module_fsm-base)
-    * [StateMachine](#exp_module_fsm-base--StateMachine) ⇐ <code>EventEmitter</code> ⏏
+    * [StateMachine](#exp_module_fsm-base--StateMachine) ⇐ <code>Emitter</code> ⏏
         * [.state](#module_fsm-base--StateMachine+state) : <code>string</code>
+        * [.setState(state)](#module_fsm-base--StateMachine+setState)
         * ["state" (state, prev)](#module_fsm-base--StateMachine+event_state)
         * ["&lt;state value&gt;"](#module_fsm-base--StateMachine+event_&lt;state value&gt;)
 
 <a name="exp_module_fsm-base--StateMachine"></a>
 
-### StateMachine ⇐ <code>EventEmitter</code> ⏏
+### StateMachine ⇐ <code>Emitter</code> ⏏
 **Kind**: Exported class  
-**Extends**: <code>EventEmitter</code>  
+**Extends**: <code>Emitter</code>  
 <a name="module_fsm-base--StateMachine+state"></a>
 
 #### stateMachine.state : <code>string</code>
@@ -45,6 +47,17 @@ The current state
 **Throws**:
 
 - `INVALID_MOVE` if an invalid move made
+
+<a name="module_fsm-base--StateMachine+setState"></a>
+
+#### stateMachine.setState(state)
+Set the current state. The second arg onward will be sent as event args.
+
+**Kind**: instance method of [<code>StateMachine</code>](#exp_module_fsm-base--StateMachine)  
+
+| Param | Type |
+| --- | --- |
+| state | <code>string</code> | 
 
 <a name="module_fsm-base--StateMachine+event_state"></a>
 

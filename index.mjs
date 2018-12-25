@@ -4,21 +4,6 @@ import arrayify from './node_modules/array-back/index.mjs'
 /**
  * @module fsm-base
  * @typicalname stateMachine
- * @example
- * const StateMachine = require('fsm-base')
- *
- * class Stateful extends StateMachine {
- *  super([
- *    { from: undefined, to: 'one' },
- *    { from: 'one', to: 'two' },
- *    { from: 'two', to: 'three' },
- *    { from: [ 'one', 'three' ], to: 'four'}
- *  ])
- * }
- * const instance = new Stateful()
- * instance.state = 'one'  // valid state change
- * instance.state = 'two'  // valid state change
- * instance.state = 'four' // throws - invalid state change
  */
 
 const _state = new WeakMap()
@@ -31,7 +16,6 @@ const _state = new WeakMap()
 class StateMachine extends Emitter {
   constructor (validMoves) {
     super()
-
     this._validMoves = arrayify(validMoves).map(move => {
       if (!Array.isArray(move.from)) move.from = [ move.from ]
       if (!Array.isArray(move.to)) move.to = [ move.to ]
@@ -49,6 +33,14 @@ class StateMachine extends Emitter {
   }
 
   set state (state) {
+    this.setState(state)
+  }
+
+  /**
+   * Set the current state. The second arg onward will be sent as event args.
+   * @param {string} state
+   */
+  setState (state, ...args) {
     /* nothing to do */
     if (this.state === state) return
 
@@ -78,7 +70,7 @@ class StateMachine extends Emitter {
          * fired on every state change
          * @event module:fsm-base#&lt;state value&gt;
          */
-        this.emit(state)
+        this.emit(state, ...args)
       }
     })
     if (!moved) {

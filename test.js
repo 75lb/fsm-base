@@ -51,3 +51,19 @@ runner.test('invalid move', function () {
   }
   a.strictEqual(eventCount, 0)
 })
+
+runner.test('setState: custom event args', function () {
+  const sm = new StateMachine([
+    { from: undefined, to: 'one' }
+  ])
+  let eventCount = 0
+  const testArg = {}
+
+  sm.on('one', function (arg) {
+    a.strictEqual(arg, testArg)
+    eventCount++
+  })
+
+  sm.setState('one', testArg)
+  a.strictEqual(eventCount, 1)
+})

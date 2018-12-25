@@ -4,6 +4,24 @@
 [![Dependency Status](https://david-dm.org/75lb/fsm-base.svg)](https://david-dm.org/75lb/fsm-base)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
+## fsm-base
+
+```js
+const StateMachine = require('fsm-base')
+class Stateful extends StateMachine {
+super([
+  { from: undefined, to: 'one' },
+  { from: 'one', to: 'two' },
+  { from: 'two', to: 'three' },
+  { from: [ 'one', 'three' ], to: 'four'}
+])
+}
+const instance = new Stateful()
+instance.state = 'one'  // valid state change
+instance.state = 'two'  // valid state change
+instance.state = 'four' // throws - invalid state change
+```
+
 {{>main}}
 
 * * *
