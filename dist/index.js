@@ -200,6 +200,7 @@
    */
 
   const _state = new WeakMap();
+  const _validMoves = new WeakMap();
 
   /**
    * @class
@@ -209,11 +210,11 @@
   class StateMachine extends Emitter {
     constructor (validMoves) {
       super();
-      this._validMoves = arrayify(validMoves).map(move => {
+      _validMoves.set(this, arrayify(validMoves).map(move => {
         if (!Array.isArray(move.from)) move.from = [ move.from ];
         if (!Array.isArray(move.to)) move.to = [ move.to ];
         return move
-      });
+      }));
     }
 
     /**
@@ -237,7 +238,7 @@
       /* nothing to do */
       if (this.state === state) return
 
-      const validTo = this._validMoves.some(move => move.to.indexOf(state) > -1);
+      const validTo = _validMoves.get(this).some(move => move.to.indexOf(state) > -1);
       if (!validTo) {
         const msg = `Invalid state: ${state}`;
         const err = new Error(msg);
@@ -247,7 +248,7 @@
 
       let moved = false;
       const prevState = this.state;
-      this._validMoves.forEach(move => {
+      _validMoves.get(this).forEach(move => {
         if (move.from.indexOf(this.state) > -1 && move.to.indexOf(state) > -1) {
           _state.set(this, state);
           moved = true;
@@ -267,7 +268,7 @@
         }
       });
       if (!moved) {
-        let froms = this._validMoves
+        let froms = _validMoves.get(this)
           .filter(move => move.to.indexOf(state) > -1)
           .map(move => move.from.map(from => `'${from}'`))
           .reduce(flatten);
