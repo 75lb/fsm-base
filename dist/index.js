@@ -70,7 +70,7 @@
       }
 
       /* bubble event up */
-      if (this.parent) this.parent.emitTarget(target || this, eventName, ...args);
+      if (this.parent) this.parent.emitTarget(eventName, target || this, ...args);
     }
 
      /**
