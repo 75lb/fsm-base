@@ -6,24 +6,27 @@
   "repository": "https://github.com/75lb/fsm-base",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "keywords": [
     "finite",
     "state",
     "machine",
     "base",
-    "class"
+    "class",
+    "isomorphic",
+    "load-anywhere"
   ],
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "files": [
     "index.mjs",
     "dist"
   ],
   "scripts": {
-    "test": "test-runner test.js",
-    "docs": "jsdoc2md -c build/jsdoc.conf -t README.hbs index.mjs > README.md; echo",
-    "dist": "rollup -c build/index.config.js && rollup -c build/index-esm.config.js"
+    "test": "npm run dist && test-runner test.js",
+    "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs > README.md",
+    "dist": "rollup -c"
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^5.0.2",

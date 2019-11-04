@@ -1,6 +1,6 @@
 const Tom = require('test-runner').Tom
 const StateMachine = require('./')
-const a = require('assert')
+const a = require('assert').strict
 
 const tom = module.exports = new Tom()
 
@@ -13,57 +13,57 @@ const validMoves = [
 
 tom.test('valid move', function () {
   const sm = new StateMachine(validMoves)
-  let eventCount = 0
+  const actuals = []
 
   sm.on('state', function (state, prevState) {
-    a.strictEqual(state, 'one')
-    a.strictEqual(prevState, undefined)
-    eventCount++
+    a.equal(state, 'one')
+    a.equal(prevState, undefined)
+    actuals.push('state')
   })
 
   sm.on('one', function () {
-    eventCount++
+    actuals.push('one')
   })
 
   sm.state = 'one'
   sm.state = 'one' // should not trigger events again
-  a.strictEqual(sm.state, 'one', 'state should be one')
-  a.strictEqual(eventCount, 2)
+  a.equal(sm.state, 'one')
+  a.deepEqual(actuals, [ 'state', 'one' ])
 })
 
 tom.test('invalid move', function () {
   const sm = new StateMachine(validMoves)
-  let eventCount = 0
+  const actuals = []
 
   sm.on('state', function (state, prevState) {
-    eventCount++
+    actuals.push('state')
   })
 
   sm.on('one', function () {
-    eventCount++
+    actuals.push('one')
   })
 
   try {
     sm.state = 'two'
-    eventCount++
+    actuals.push('set:two')
   } catch (err) {
-    a.strictEqual(err.message, "Can only move to 'two' from 'one' (not 'undefined')")
+    a.equal(err.message, "Can only move to 'two' from 'one' (not 'undefined')")
   }
-  a.strictEqual(eventCount, 0)
+  a.deepEqual(actuals, [])
 })
 
 tom.test('setState: custom event args', function () {
   const sm = new StateMachine([
     { from: undefined, to: 'one' }
   ])
-  let eventCount = 0
+  const actuals = []
   const testArg = {}
 
   sm.on('one', function (arg) {
-    a.strictEqual(arg, testArg)
-    eventCount++
+    a.equal(arg, testArg)
+    actuals.push('one')
   })
 
   sm.setState('one', testArg)
-  a.strictEqual(eventCount, 1)
+  a.deepEqual(actuals, ['one'])
 })

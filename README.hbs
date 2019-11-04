@@ -8,13 +8,16 @@
 
 ```js
 const StateMachine = require('fsm-base')
+
 class Stateful extends StateMachine {
-super([
-  { from: undefined, to: 'one' },
-  { from: 'one', to: 'two' },
-  { from: 'two', to: 'three' },
-  { from: [ 'one', 'three' ], to: 'four'}
-])
+  constructor () {
+    super([
+      { from: undefined, to: 'one' },
+      { from: 'one', to: 'two' },
+      { from: 'two', to: 'three' },
+      { from: [ 'one', 'three' ], to: 'four'}
+    ])
+  }
 }
 const instance = new Stateful()
 instance.state = 'one'  // valid state change
