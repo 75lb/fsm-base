@@ -1,5 +1,6 @@
 import Emitter from './node_modules/obso/index.mjs'
 import arrayify from './node_modules/array-back/index.mjs'
+import flatten from './node_modules/reduce-flatten/index.mjs'
 
 /**
  * @module fsm-base
@@ -10,7 +11,6 @@ const _state = new WeakMap()
 const _validMoves = new WeakMap()
 
 /**
- * @class
  * @alias module:fsm-base
  * @extends {Emitter}
  */
@@ -85,10 +85,6 @@ class StateMachine extends Emitter {
       throw err
     }
   }
-}
-
-function flatten (prev, curr) {
-  return prev.concat(curr)
 }
 
 export default StateMachine

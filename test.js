@@ -1,8 +1,8 @@
-const TestRunner = require('test-runner')
+const Tom = require('test-runner').Tom
 const StateMachine = require('./')
 const a = require('assert')
 
-const runner = new TestRunner()
+const tom = module.exports = new Tom()
 
 const validMoves = [
   { from: undefined, to: 'one' },
@@ -11,7 +11,7 @@ const validMoves = [
   { from: [ 'one', 'three' ], to: 'four' }
 ]
 
-runner.test('valid move', function () {
+tom.test('valid move', function () {
   const sm = new StateMachine(validMoves)
   let eventCount = 0
 
@@ -31,7 +31,7 @@ runner.test('valid move', function () {
   a.strictEqual(eventCount, 2)
 })
 
-runner.test('invalid move', function () {
+tom.test('invalid move', function () {
   const sm = new StateMachine(validMoves)
   let eventCount = 0
 
@@ -52,7 +52,7 @@ runner.test('invalid move', function () {
   a.strictEqual(eventCount, 0)
 })
 
-runner.test('setState: custom event args', function () {
+tom.test('setState: custom event args', function () {
   const sm = new StateMachine([
     { from: undefined, to: 'one' }
   ])
