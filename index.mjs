@@ -7,6 +7,7 @@ import flatten from './node_modules/reduce-flatten/index.mjs'
  * @typicalname stateMachine
  */
 
+const _initialState = new WeakMap()
 const _state = new WeakMap()
 const _validMoves = new WeakMap()
 
@@ -15,13 +16,15 @@ const _validMoves = new WeakMap()
  * @extends {Emitter}
  */
 class StateMachine extends Emitter {
-  constructor (validMoves) {
+  constructor (initialState, validMoves) {
     super()
     _validMoves.set(this, arrayify(validMoves).map(move => {
-      if (!Array.isArray(move.from)) move.from = [ move.from ]
-      if (!Array.isArray(move.to)) move.to = [ move.to ]
+      move.from = arrayify(move.from)
+      move.to = arrayify(move.to)
       return move
     }))
+    _state.set(this, initialState)
+    _initialState.set(this, initialState)
   }
 
   /**
@@ -84,6 +87,13 @@ class StateMachine extends Emitter {
       err.name = 'INVALID_MOVE'
       throw err
     }
+  }
+
+  resetState () {
+    const prevState = this.state
+    const initialState = _initialState.get(this)
+    _state.set(this, initialState)
+    this.emit('reset', prevState)
   }
 }
 

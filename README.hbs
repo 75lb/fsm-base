@@ -1,10 +1,10 @@
 [![view on npm](https://img.shields.io/npm/v/fsm-base.svg)](https://www.npmjs.org/package/fsm-base)
 [![npm module downloads](https://img.shields.io/npm/dt/fsm-base.svg)](https://www.npmjs.org/package/fsm-base)
 [![Build Status](https://travis-ci.org/75lb/fsm-base.svg?branch=master)](https://travis-ci.org/75lb/fsm-base)
-[![Dependency Status](https://david-dm.org/75lb/fsm-base.svg)](https://david-dm.org/75lb/fsm-base)
+[![Dependency Status](https://badgen.net/david/dep/75lb/fsm-base)](https://david-dm.org/75lb/fsm-base)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
-## fsm-base
+# fsm-base
 
 ```js
 const StateMachine = require('fsm-base')
