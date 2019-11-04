@@ -8,7 +8,7 @@ const validMoves = [
   { from: null, to: 'one' },
   { from: 'one', to: 'two' },
   { from: 'two', to: 'three' },
-  { from: [ 'one', 'three' ], to: 'four' }
+  { from: ['one', 'three'], to: 'four' }
 ]
 
 tom.test('valid move', function () {
@@ -28,7 +28,7 @@ tom.test('valid move', function () {
   sm.state = 'one'
   sm.state = 'one' // should not trigger events again
   a.equal(sm.state, 'one')
-  a.deepEqual(actuals, [ 'state', 'one' ])
+  a.deepEqual(actuals, ['state', 'one'])
 })
 
 tom.test('invalid move', function () {

@@ -305,7 +305,7 @@
         }
       });
       if (!moved) {
-        let froms = _validMoves.get(this)
+        const froms = _validMoves.get(this)
           .filter(move => move.to.indexOf(state) > -1)
           .map(move => move.from.map(from => `'${from}'`))
           .reduce(flatten);
