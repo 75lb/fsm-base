@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "array-back": "^4.0.1",
-    "obso": "^0.5.0",
+    "obso": "^0.5.1",
     "reduce-flatten": "^3.0.0"
   },
   "standard": {
