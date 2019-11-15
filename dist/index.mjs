@@ -196,7 +196,7 @@ function arrayify (input) {
     return Array.from(input)
   }
 
-  return [ input ]
+  return [input]
 }
 
 /**
