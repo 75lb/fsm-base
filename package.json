@@ -6,7 +6,7 @@
   "repository": "https://github.com/75lb/fsm-base",
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "index.mjs",
   "keywords": [
     "finite",
     "state",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "jsdoc-to-markdown": "^5.0.2",
     "rollup": "^1.27.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "test-runner": "^0.7.6"
   },
   "dependencies": {
