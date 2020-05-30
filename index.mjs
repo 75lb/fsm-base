@@ -16,6 +16,10 @@ const _validMoves = new WeakMap()
  * @extends {Emitter}
  */
 class StateMachine extends Emitter {
+  /**
+   * @param {string} - Initial state, e.g. 'pending'.
+   * @param {object[]} - Array of valid move rules.
+   */
   constructor (initialState, validMoves) {
     super()
     _validMoves.set(this, arrayify(validMoves).map(move => {
@@ -72,7 +76,6 @@ class StateMachine extends Emitter {
 
         /**
          * fired on every state change
-         * @event module:fsm-base#&lt;state value&gt;
          */
         this.emit(state, ...args)
       }
@@ -89,6 +92,10 @@ class StateMachine extends Emitter {
     }
   }
 
+  /**
+   * Reset to initial state.
+   * @emits "reset"
+   */
   resetState () {
     const prevState = this.state
     const initialState = _initialState.get(this)

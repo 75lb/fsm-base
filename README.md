@@ -32,16 +32,26 @@ instance.state = 'four' // throws - invalid state change
 
 * [fsm-base](#module_fsm-base)
     * [StateMachine](#exp_module_fsm-base--StateMachine) ⇐ <code>Emitter</code> ⏏
+        * [new StateMachine(initialState, validMoves)](#new_module_fsm-base--StateMachine_new)
         * [.state](#module_fsm-base--StateMachine+state) : <code>string</code>
         * [.setState(state)](#module_fsm-base--StateMachine+setState)
+        * [.resetState()](#module_fsm-base--StateMachine+resetState)
         * ["state" (state, prev)](#module_fsm-base--StateMachine+event_state)
-        * ["&lt;state value&gt;"](#module_fsm-base--StateMachine+event_&lt;state value&gt;)
 
 <a name="exp_module_fsm-base--StateMachine"></a>
 
 ### StateMachine ⇐ <code>Emitter</code> ⏏
 **Kind**: Exported class  
 **Extends**: <code>Emitter</code>  
+<a name="new_module_fsm-base--StateMachine_new"></a>
+
+#### new StateMachine(initialState, validMoves)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| initialState | <code>string</code> | Initial state, e.g. 'pending'. |
+| validMoves | <code>Array.&lt;object&gt;</code> | Array of valid move rules. |
+
 <a name="module_fsm-base--StateMachine+state"></a>
 
 #### stateMachine.state : <code>string</code>
@@ -63,6 +73,13 @@ Set the current state. The second arg onward will be sent as event args.
 | --- | --- |
 | state | <code>string</code> | 
 
+<a name="module_fsm-base--StateMachine+resetState"></a>
+
+#### stateMachine.resetState()
+Reset to initial state.
+
+**Kind**: instance method of [<code>StateMachine</code>](#exp_module_fsm-base--StateMachine)  
+**Emits**: <code>event:&quot;reset&quot;</code>  
 <a name="module_fsm-base--StateMachine+event_state"></a>
 
 #### "state" (state, prev)
@@ -75,12 +92,6 @@ fired on every state change
 | state | <code>string</code> | the new state |
 | prev | <code>string</code> | the previous state |
 
-<a name="module_fsm-base--StateMachine+event_&lt;state value&gt;"></a>
-
-#### "&lt;state value&gt;"
-fired on every state change
-
-**Kind**: event emitted by [<code>StateMachine</code>](#exp_module_fsm-base--StateMachine)  
 
 * * *
 
