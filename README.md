@@ -1,7 +1,8 @@
-[![view on npm](https://img.shields.io/npm/v/fsm-base.svg)](https://www.npmjs.org/package/fsm-base)
-[![npm module downloads](https://img.shields.io/npm/dt/fsm-base.svg)](https://www.npmjs.org/package/fsm-base)
+[![view on npm](https://badgen.net/npm/v/fsm-base)](https://www.npmjs.org/package/fsm-base)
+[![npm module downloads](https://badgen.net/npm/dt/fsm-base)](https://www.npmjs.org/package/fsm-base)
+[![Gihub repo dependents](https://badgen.net/github/dependents-repo/75lb/fsm-base)](https://github.com/75lb/fsm-base/network/dependents?dependent_type=REPOSITORY)
+[![Gihub package dependents](https://badgen.net/github/dependents-pkg/75lb/fsm-base)](https://github.com/75lb/fsm-base/network/dependents?dependent_type=PACKAGE)
 [![Build Status](https://travis-ci.org/75lb/fsm-base.svg?branch=master)](https://travis-ci.org/75lb/fsm-base)
-[![Dependency Status](https://badgen.net/david/dep/75lb/fsm-base)](https://david-dm.org/75lb/fsm-base)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
 # fsm-base
@@ -83,4 +84,4 @@ fired on every state change
 
 * * *
 
-&copy; 2015-19 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).
+&copy; 2015-20 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).

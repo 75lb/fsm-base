@@ -17,26 +17,27 @@
     "load-anywhere"
   ],
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "files": [
     "index.mjs",
     "dist"
   ],
   "scripts": {
-    "test": "npm run dist && test-runner test.js",
+    "test": "npm run dist && esm-runner test.mjs",
     "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs > README.md",
     "dist": "rollup -c"
   },
   "devDependencies": {
-    "jsdoc-to-markdown": "^5.0.2",
-    "rollup": "^1.27.0",
+    "esm-runner": "^0.3.4",
+    "jsdoc-to-markdown": "^5.0.3",
+    "rollup": "^2.11.2",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "test-runner": "^0.7.6"
+    "test-runner": "^0.8.13"
   },
   "dependencies": {
     "array-back": "^4.0.1",
-    "obso": "^0.5.1",
+    "obso": "^0.6.0",
     "reduce-flatten": "^3.0.0"
   },
   "standard": {

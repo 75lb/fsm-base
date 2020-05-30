@@ -1,6 +1,6 @@
-import Emitter from 'obso'
-import arrayify from 'array-back'
-import flatten from 'reduce-flatten'
+import Emitter from 'obso/index.mjs'
+import arrayify from 'array-back/index.mjs'
+import flatten from 'reduce-flatten/index.mjs'
 
 /**
  * @module fsm-base

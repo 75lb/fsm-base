@@ -1,8 +1,9 @@
-const Tom = require('test-runner').Tom
-const StateMachine = require('./')
-const a = require('assert').strict
+import TestRunner from 'test-runner'
+import StateMachine from './index.mjs'
+import assert from 'assert'
 
-const tom = module.exports = new Tom()
+const tom = new TestRunner.Tom()
+const a = assert.strict
 
 const validMoves = [
   { from: null, to: 'one' },
@@ -86,3 +87,5 @@ tom.test('resetState(): returns to initialState and fires "reset" event', functi
   actuals.push(sm.state)
   a.deepEqual(actuals, ['one', 'two', 'reset:two', 'one', 'one'])
 })
+
+export default tom

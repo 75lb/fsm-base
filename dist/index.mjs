@@ -1,22 +1,28 @@
 /**
  * @module obso
  */
+const _listeners = new WeakMap();
 
 /**
  * @alias module:obso
  */
 class Emitter {
+  constructor () {
+    _listeners.set(this, []);
+  }
+
   /**
    * Emit an event.
    * @param {string} eventName - the event name to emit.
    * @param ...args {*} - args to pass to the event handler
    */
   emit (eventName, ...args) {
-    if (this._listeners && this._listeners.length > 0) {
+    const listeners = _listeners.get(this);
+    if (listeners && listeners.length > 0) {
       const toRemove = [];
 
       /* invoke each relevant listener */
-      for (const listener of this._listeners) {
+      for (const listener of listeners) {
         const handlerArgs = args.slice();
         if (listener.eventName === '__ALL__') {
           handlerArgs.unshift(eventName);
@@ -31,7 +37,7 @@ class Emitter {
       }
 
       toRemove.forEach(listener => {
-        this._listeners.splice(this._listeners.indexOf(listener), 1);
+        listeners.splice(listeners.indexOf(listener), 1);
       });
     }
 
@@ -40,11 +46,12 @@ class Emitter {
   }
 
   _emitTarget (eventName, target, ...args) {
-    if (this._listeners && this._listeners.length > 0) {
+    const listeners = _listeners.get(this);
+    if (listeners && listeners.length > 0) {
       const toRemove = [];
 
       /* invoke each relevant listener */
-      for (const listener of this._listeners) {
+      for (const listener of listeners) {
         const handlerArgs = args.slice();
         if (listener.eventName === '__ALL__') {
           handlerArgs.unshift(eventName);
@@ -59,7 +66,7 @@ class Emitter {
       }
 
       toRemove.forEach(listener => {
-        this._listeners.splice(this._listeners.indexOf(listener), 1);
+        listeners.splice(listeners.indexOf(listener), 1);
       });
     }
 
@@ -75,7 +82,7 @@ class Emitter {
     * @param {boolean} [options.once] - If `true`, the handler will be invoked once then removed.
     */
   on (eventName, handler, options) {
-    createListenersArray(this);
+    const listeners = _listeners.get(this);
     options = options || {};
     if (arguments.length === 1 && typeof eventName === 'function') {
       handler = eventName;
@@ -86,7 +93,7 @@ class Emitter {
     } else if (handler && typeof handler !== 'function') {
       throw new Error('handler arg must be a function')
     } else {
-      this._listeners.push({ eventName, handler: handler, once: options.once });
+      listeners.push({ eventName, handler: handler, once: options.once });
     }
   }
 
@@ -96,11 +103,12 @@ class Emitter {
    * @param handler {function} - the event handler
    */
   removeEventListener (eventName, handler) {
-    if (!this._listeners || this._listeners.length === 0) return
-    const index = this._listeners.findIndex(function (listener) {
+    const listeners = _listeners.get(this);
+    if (!listeners || listeners.length === 0) return
+    const index = listeners.findIndex(function (listener) {
       return listener.eventName === eventName && listener.handler === handler
     });
-    if (index > -1) this._listeners.splice(index, 1);
+    if (index > -1) listeners.splice(index, 1);
   }
 
   /**
@@ -112,31 +120,12 @@ class Emitter {
     /* TODO: the once option is browser-only */
     this.on(eventName, handler, { once: true });
   }
-
-  /**
-   * Propagate events from the supplied emitter to this emitter.
-   * @param {string} eventName - the event name to propagate
-   * @param {object} from - the emitter to propagate from
-   */
-  propagate (eventName, from) {
-    from.on(eventName, (...args) => this.emit(eventName, ...args));
-  }
 }
 
 /**
  * Alias for `on`.
  */
 Emitter.prototype.addEventListener = Emitter.prototype.on;
-
-function createListenersArray (target) {
-  if (target._listeners) return
-  Object.defineProperty(target, '_listeners', {
-    enumerable: false,
-    configurable: false,
-    writable: false,
-    value: []
-  });
-}
 
 /**
  * Takes any input and guarantees an array back.
