@@ -1,6 +1,5 @@
 import Emitter from 'obso/index.mjs'
-import arrayify from 'array-back/index.mjs'
-import flatten from 'reduce-flatten/index.mjs'
+import arrayify from 'array-back'
 
 /**
  * @module fsm-base
@@ -84,7 +83,7 @@ class StateMachine extends Emitter {
       const froms = _validMoves.get(this)
         .filter(move => move.to.indexOf(state) > -1)
         .map(move => move.from.map(from => `'${from}'`))
-        .reduce(flatten)
+        .flat()
       const msg = `Can only move to '${state}' from ${froms.join(' or ') || '<unspecified>'} (not '${prevState}')`
       const err = new Error(msg)
       err.name = 'INVALID_MOVE'

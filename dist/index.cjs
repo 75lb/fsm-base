@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @module obso
  */
@@ -286,4 +288,4 @@ class StateMachine extends Emitter {
   }
 }
 
-export default StateMachine;
+module.exports = StateMachine;

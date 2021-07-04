@@ -5,8 +5,10 @@
   "description": "Finite state machine base class",
   "repository": "https://github.com/75lb/fsm-base",
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "index.mjs",
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./dist/index.cjs"
+  },
   "keywords": [
     "finite",
     "state",
@@ -17,28 +19,26 @@
     "load-anywhere"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "files": [
     "index.mjs",
     "dist"
   ],
   "scripts": {
-    "test": "npm run dist && esm-runner test.mjs",
+    "test": "npm run dist && test-runner test.mjs",
     "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs > README.md",
     "dist": "rollup -c"
   },
   "devDependencies": {
-    "esm-runner": "^0.3.4",
-    "jsdoc-to-markdown": "^5.0.3",
-    "rollup": "^2.11.2",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "test-runner": "^0.8.13"
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "jsdoc-to-markdown": "^7.0.1",
+    "rollup": "^2.52.7",
+    "test-runner": "^0.9.5"
   },
   "dependencies": {
-    "array-back": "^4.0.1",
-    "obso": "^0.6.0",
-    "reduce-flatten": "^3.0.0"
+    "array-back": "^6.1.1",
+    "obso": "^0.7.0"
   },
   "standard": {
     "ignore": [

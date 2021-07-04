@@ -1,21 +1,23 @@
-const resolve = require('rollup-plugin-node-resolve')
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 
-module.exports = [
-  {
-    input: 'index.mjs',
-    output: {
-      file: 'dist/index.js',
-      format: 'umd',
-      name: 'StateMachine'
-    },
-    plugins: [resolve()]
-  },
+export default [
   {
     input: 'index.mjs',
     output: {
       file: 'dist/index.mjs',
       format: 'esm'
     },
-    plugins: [resolve()]
+    external: [],
+    plugins: [nodeResolve({ preferBuiltins: true })]
+  },
+  {
+    input: 'index.mjs',
+    output: {
+      file: 'dist/index.cjs',
+      format: 'cjs',
+      exports: 'auto'
+    },
+    external: [],
+    plugins: [nodeResolve({ preferBuiltins: true })]
   }
 ]
