@@ -5,8 +5,9 @@
   "description": "Finite state machine base class",
   "repository": "https://github.com/75lb/fsm-base",
   "license": "MIT",
+  "type": "module",
   "exports": {
-    "import": "./index.mjs",
+    "import": "./index.js",
     "require": "./dist/index.cjs"
   },
   "keywords": [
@@ -22,22 +23,22 @@
     "node": ">=14"
   },
   "files": [
-    "index.mjs",
+    "index.js",
     "dist"
   ],
   "scripts": {
-    "test": "npm run dist && test-runner test.mjs",
-    "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs > README.md",
+    "test": "npm run dist && test-runner test.js",
+    "docs": "jsdoc2md -t README.hbs index.js > README.md",
     "dist": "rollup -c"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^13.0.0",
-    "jsdoc-to-markdown": "^7.0.1",
-    "rollup": "^2.52.7",
-    "test-runner": "^0.9.5"
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "jsdoc-to-markdown": "^8.0.0",
+    "rollup": "^3.19.1",
+    "test-runner": "^0.10.1"
   },
   "dependencies": {
-    "array-back": "^6.1.1",
+    "array-back": "^6.2.2",
     "obso": "^0.7.0"
   },
   "standard": {

@@ -286,4 +286,4 @@ class StateMachine extends Emitter {
   }
 }
 
-export default StateMachine;
+export { StateMachine as default };

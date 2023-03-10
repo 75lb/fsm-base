@@ -1,5 +1,5 @@
 import TestRunner from 'test-runner'
-import StateMachine from './index.mjs'
+import StateMachine from 'fsm-base'
 import assert from 'assert'
 
 const tom = new TestRunner.Tom()
