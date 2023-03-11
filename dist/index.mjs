@@ -77,7 +77,7 @@ class StateMachine {
     Object.defineProperty(target, 'state', Object.getOwnPropertyDescriptor(this.prototype, 'state'));
     Object.defineProperty(target, 'resetState', Object.getOwnPropertyDescriptor(this.prototype, 'resetState'));
     Object.defineProperty(target, '_initStateMachine', Object.getOwnPropertyDescriptor(this.prototype, '_initStateMachine'));
-    Object.defineProperty(target, '_onStateChange', Object.getOwnPropertyDescriptor(this.prototype, '_onStateChange'));
+    Object.defineProperty(target, 'onStateChange', Object.getOwnPropertyDescriptor(this.prototype, 'onStateChange'));
     if (validMoves) {
       target._initStateMachine(initialState, validMoves);
     }
@@ -103,7 +103,7 @@ class StateMachine {
    * @param {string} - the new state
    * @param {string} - the previous state
    */
-  _onStateChange (state, prevState) {}
+  onStateChange (state, prevState) {}
 
   /**
    * The current state
@@ -131,7 +131,7 @@ class StateMachine {
       if (move.from.includes(prevState) && move.to.includes(state)) {
         _state.set(this, state);
         moved = true;
-        this._onStateChange(state, prevState);
+        this.onStateChange(state, prevState);
       }
     }
     if (!moved) {

@@ -15,7 +15,7 @@ tom.test('valid moves', function () {
 
   const actuals = []
 
-  sm._onStateChange = function (state, prevState) {
+  sm.onStateChange = function (state, prevState) {
     actuals.push(state, prevState)
   }
 
@@ -68,7 +68,7 @@ tom.test('invalid move', function () {
 
   const actuals = []
 
-  sm._onStateChange = function (state, prevState) {
+  sm.onStateChange = function (state, prevState) {
     actuals.push(state, prevState)
   }
 
@@ -88,7 +88,7 @@ tom.test('invalid state', function () {
 
   const actuals = []
 
-  sm._onStateChange = function (state, prevState) {
+  sm.onStateChange = function (state, prevState) {
     actuals.push(state, prevState)
   }
 
