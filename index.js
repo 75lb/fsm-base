@@ -1,4 +1,3 @@
-import Emitter from 'obso/index.mjs'
 import arrayify from 'array-back'
 
 /**
@@ -12,15 +11,29 @@ const _validMoves = new WeakMap()
 
 /**
  * @alias module:fsm-base
- * @extends {Emitter}
  */
-class StateMachine extends Emitter {
+class StateMachine {
+  /**
+   * @param {object} - The target to receive the state machine behaviour.
+   * @param {string} - Initial state, e.g. 'pending'.
+   * @param {object[]} - Array of valid move rules.
+   */
+  static mixInto (target, initialState, validMoves) {
+    Object.defineProperty(target, 'state', Object.getOwnPropertyDescriptor(this.prototype, 'state'))
+    Object.defineProperty(target, 'resetState', Object.getOwnPropertyDescriptor(this.prototype, 'resetState'))
+    Object.defineProperty(target, '_initStateMachine', Object.getOwnPropertyDescriptor(this.prototype, '_initStateMachine'))
+    Object.defineProperty(target, '_onStateChange', Object.getOwnPropertyDescriptor(this.prototype, '_onStateChange'))
+    if (validMoves) {
+      target._initStateMachine(initialState, validMoves)
+    }
+    return target
+  }
+
   /**
    * @param {string} - Initial state, e.g. 'pending'.
    * @param {object[]} - Array of valid move rules.
    */
-  constructor (initialState, validMoves) {
-    super()
+  _initStateMachine (initialState, validMoves) {
     _validMoves.set(this, arrayify(validMoves).map(move => {
       move.from = arrayify(move.from)
       move.to = arrayify(move.to)
@@ -29,6 +42,13 @@ class StateMachine extends Emitter {
     _state.set(this, initialState)
     _initialState.set(this, initialState)
   }
+
+  /**
+   * Invoked on every state change
+   * @param {string} - the new state
+   * @param {string} - the previous state
+   */
+  _onStateChange (state, prevState) {}
 
   /**
    * The current state
@@ -40,48 +60,28 @@ class StateMachine extends Emitter {
   }
 
   set state (state) {
-    this.setState(state)
-  }
-
-  /**
-   * Set the current state. The second arg onward will be sent as event args.
-   * @param {string} state
-   */
-  setState (state, ...args) {
     /* nothing to do */
     if (this.state === state) return
 
     const validTo = _validMoves.get(this).some(move => move.to.indexOf(state) > -1)
     if (!validTo) {
-      const msg = `Invalid state: ${state}`
-      const err = new Error(msg)
+      const err = new Error(`Invalid state: ${state}`)
       err.name = 'INVALID_MOVE'
       throw err
     }
 
     let moved = false
     const prevState = this.state
-    _validMoves.get(this).forEach(move => {
-      if (move.from.indexOf(this.state) > -1 && move.to.indexOf(state) > -1) {
+    for (const move of _validMoves.get(this)) {
+      if (move.from.includes(prevState) && move.to.includes(state)) {
         _state.set(this, state)
         moved = true
-        /**
-         * fired on every state change
-         * @event module:fsm-base#state
-         * @param state {string} - the new state
-         * @param prev {string} - the previous state
-         */
-        this.emit('state', state, prevState)
-
-        /**
-         * fired on every state change
-         */
-        this.emit(state, ...args)
+        this._onStateChange(state, prevState)
       }
-    })
+    }
     if (!moved) {
       const froms = _validMoves.get(this)
-        .filter(move => move.to.indexOf(state) > -1)
+        .filter(move => move.to.includes(state))
         .map(move => move.from.map(from => `'${from}'`))
         .flat()
       const msg = `Can only move to '${state}' from ${froms.join(' or ') || '<unspecified>'} (not '${prevState}')`
@@ -93,13 +93,9 @@ class StateMachine extends Emitter {
 
   /**
    * Reset to initial state.
-   * @emits "reset"
    */
   resetState () {
-    const prevState = this.state
-    const initialState = _initialState.get(this)
-    _state.set(this, initialState)
-    this.emit('reset', prevState)
+    _state.set(this, _initialState.get(this))
   }
 }
 

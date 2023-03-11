@@ -27,7 +27,8 @@
     "dist"
   ],
   "scripts": {
-    "test": "npm run dist && test-runner test.js",
+    "test": "npm run dist && npm run test:ci",
+    "test:ci": "test-runner test.js",
     "docs": "jsdoc2md -t README.hbs index.js > README.md",
     "dist": "rollup -c"
   },
@@ -38,8 +39,7 @@
     "test-runner": "^0.10.1"
   },
   "dependencies": {
-    "array-back": "^6.2.2",
-    "obso": "^0.7.0"
+    "array-back": "^6.2.2"
   },
   "standard": {
     "ignore": [
