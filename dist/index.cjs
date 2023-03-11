@@ -70,6 +70,11 @@ const _validMoves = new WeakMap();
  * @alias module:fsm-base
  */
 class StateMachine {
+  /**
+   * @param {object} - The target to receive the state machine behaviour.
+   * @param {string} - Initial state, e.g. 'pending'.
+   * @param {object[]} - Array of valid move rules.
+   */
   static mixInto (target, initialState, validMoves) {
     Object.defineProperty(target, 'state', Object.getOwnPropertyDescriptor(this.prototype, 'state'));
     Object.defineProperty(target, 'resetState', Object.getOwnPropertyDescriptor(this.prototype, 'resetState'));
@@ -96,7 +101,7 @@ class StateMachine {
   }
 
   /**
-   * fired on every state change
+   * Invoked on every state change
    * @param {string} - the new state
    * @param {string} - the previous state
    */

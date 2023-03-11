@@ -5,12 +5,12 @@ import { strict as a } from 'node:assert'
 const tom = new TestRunner.Tom()
 
 tom.test('valid moves', function () {
-  const sm = StateMachine.mixInto({})
-  sm._initStateMachine(null, [
-    { from: null, to: 'one' },
-    { from: 'one', to: 'two' },
-    { from: 'two', to: 'three' },
-    { from: ['one', 'three'], to: 'four' }
+  const target = {}
+  const sm = StateMachine.mixInto(target)
+  sm._initStateMachine('offline', [
+    { from: 'offline', to: 'connecting' },
+    { from: 'connecting', to: 'online' },
+    { from: ['connecting', 'online'], to: 'offline' }
   ])
 
   const actuals = []
@@ -19,18 +19,17 @@ tom.test('valid moves', function () {
     actuals.push(state, prevState)
   }
 
-  sm.state = 'one'
-  sm.state = 'one' // should not trigger events again
-  a.equal(sm.state, 'one')
-  sm.state = 'two'
-  sm.state = 'three'
-  sm.state = 'four'
+  sm.state = 'connecting'
+  sm.state = 'connecting' // should not trigger events again
+  a.equal(sm.state, 'connecting')
+  sm.state = 'online'
+  sm.state = 'offline'
   a.deepEqual(actuals, [
-    'one',   null,
-    'two',   'one',
-    'three', 'two',
-    'four',  'three'
+    'connecting',   'offline',
+    'online', 'connecting',
+    'offline',  'online'
   ])
+  a.equal(sm, target)
 })
 
 tom.test('multiple from 1', function () {

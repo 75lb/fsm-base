@@ -7,24 +7,49 @@
 
 # fsm-base
 
-```js
-const StateMachine = require('fsm-base')
+Finite state machine.
 
-class Stateful extends StateMachine {
-  constructor () {
-    super([
-      { from: undefined, to: 'one' },
-      { from: 'one', to: 'two' },
-      { from: 'two', to: 'three' },
-      { from: [ 'one', 'three' ], to: 'four'}
-    ])
-  }
+Either mix it into an existing object:
+
+```js
+import StateMachine from 'fsm-base'
+
+const exampleClient = {}
+
+StateMachine.mixInto(exampleClient, 'offline', [
+  { from: 'offline', to: 'connecting' },
+  { from: 'connecting', to: 'online' },
+  { from: ['connecting', 'online'], to: 'offline' }
+])
+
+exampleClient._onStateChange = function (state, prevState) {
+  console.log(`Moved to ${state} from ${prevState}`)
 }
-const instance = new Stateful()
-instance.state = 'one'  // valid state change
-instance.state = 'two'  // valid state change
-instance.state = 'four' // throws - invalid state change
+
+console.log(exampleClient.state) // Prints 'offline' - the defined initial state
+exampleClient.state = 'connecting' // valid move
+exampleClient.state = 'online' // valid move
+exampleClient.state = 'offline' // valid move
+exampleClient.state = 'something unspecified' // invalid move, throws an exception.
 ```
+
+..or define a class which extends it:
+
+```js
+class AnotherClient extends StateMachine {}
+
+const anotherClient = new AnotherClient()
+anotherClient._initStateMachine('offline', [
+  { from: 'offline', to: 'connecting' },
+  { from: 'connecting', to: 'online' },
+  { from: ['connecting', 'online'], to: 'offline' }
+])
+
+anotherClient.state = 'connecting'
+// etc
+```
+
+
 
 {{>main}}
 
