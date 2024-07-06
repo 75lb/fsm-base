@@ -14,42 +14,65 @@ Either mix it into an existing object:
 ```js
 import StateMachine from 'fsm-base'
 
-const exampleClient = {}
+const device = {}
+StateMachine.mixInto(device)
 
-StateMachine.mixInto(exampleClient, 'offline', [
+device._initStateMachine('offline', [
   { from: 'offline', to: 'connecting' },
   { from: 'connecting', to: 'online' },
   { from: ['connecting', 'online'], to: 'offline' }
 ])
 
-exampleClient._onStateChange = function (state, prevState) {
-  console.log(`Moved to ${state} from ${prevState}`)
+device.onStateChange = function (state, prevState) {
+  console.log(state, prevState)
 }
 
-console.log(exampleClient.state) // Prints 'offline' - the defined initial state
-exampleClient.state = 'connecting' // valid move
-exampleClient.state = 'online' // valid move
-exampleClient.state = 'offline' // valid move
-exampleClient.state = 'something unspecified' // invalid move, throws an exception.
+device.state = 'connecting'
+device.state = 'connecting' // should not trigger events again
+device.state = 'online'
+device.state = 'offline' // valid state move
 ```
 
 ..or define a class which extends it:
 
 ```js
-class AnotherClient extends StateMachine {}
+class Device extends StateMachine {}
 
-const anotherClient = new AnotherClient()
-anotherClient._initStateMachine('offline', [
+const device = new Device()
+device._initStateMachine('offline', [
   { from: 'offline', to: 'connecting' },
   { from: 'connecting', to: 'online' },
   { from: ['connecting', 'online'], to: 'offline' }
 ])
 
-anotherClient.state = 'connecting'
+device.onStateChange = function (state, prevState) {
+  console.log(state, prevState)
+}
+
+device.state = 'connecting'
 // etc
 ```
 
+..or mix it into an existing class that does not `extend` fsm-base.
 
+```js
+class Device {}
+StateMachine.mixInto(Device)
+
+const device = new Device()
+device._initStateMachine('offline', [
+  { from: 'offline', to: 'connecting' },
+  { from: 'connecting', to: 'online' },
+  { from: ['connecting', 'online'], to: 'offline' }
+])
+
+device.onStateChange = function (state, prevState) {
+  console.log(state, prevState)
+}
+
+device.state = 'connecting'
+//etc
+```
 
 {{>main}}
 

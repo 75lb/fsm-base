@@ -32,7 +32,34 @@ tom.test('valid moves', function () {
   ])
 })
 
-tom.test('multiple from 1', function () {
+tom.test('works on an object instance', function () {
+  const sm = {}
+  StateMachine.mixInto(sm)
+  sm._initStateMachine('offline', [
+    { from: 'offline', to: 'connecting' },
+    { from: 'connecting', to: 'online' },
+    { from: ['connecting', 'online'], to: 'offline' }
+  ])
+
+  const actuals = []
+
+  sm.onStateChange = function (state, prevState) {
+    actuals.push(state, prevState)
+  }
+
+  sm.state = 'connecting'
+  sm.state = 'connecting' // should not trigger events again
+  a.equal(sm.state, 'connecting')
+  sm.state = 'online'
+  sm.state = 'offline' // valid state move
+  a.deepEqual(actuals, [
+    'connecting', 'offline',
+    'online', 'connecting',
+    'offline', 'online'
+  ])
+})
+
+tom.test('multiple from values 1', function () {
   class TestClass {}
   StateMachine.mixInto(TestClass)
   const sm = new TestClass()
@@ -46,7 +73,7 @@ tom.test('multiple from 1', function () {
   sm.state = 'four'
 })
 
-tom.test('multiple from 2', function () {
+tom.test('multiple from values 2', function () {
   class TestClass {}
   StateMachine.mixInto(TestClass)
   const sm = new TestClass()

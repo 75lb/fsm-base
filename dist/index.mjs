@@ -72,12 +72,16 @@ class StateMachine {
    * @param {object} - The target class (or constructor function) to receive the state machine behaviour.
    */
   static mixInto (target) {
-    if (target.prototype === undefined) {
-      throw new Error('Supply a class or constructor function')
-    }
+
     for (const methodName of ['state', 'resetState', '_initStateMachine', 'onStateChange']) {
       /* ClientBaseAppsScript required methods to be written to the target.prototype - instance properties might not need writing to the target.prototype */
-      Object.defineProperty(target.prototype, methodName, Object.getOwnPropertyDescriptor(this.prototype, methodName));
+
+      const stateMachineMethod = Object.getOwnPropertyDescriptor(this.prototype, methodName);
+      if (target.prototype === undefined) {
+        Object.defineProperty(target, methodName, stateMachineMethod);
+      } else {
+        Object.defineProperty(target.prototype, methodName, stateMachineMethod);
+      }
     }
     return target
   }
