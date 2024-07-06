@@ -29,7 +29,7 @@
   "scripts": {
     "test": "npm run dist && npm run test:ci",
     "test:ci": "test-runner test.js",
-    "docs": "jsdoc2md -t README.hbs index.js > README.md",
+    "docs": "jsdoc2md index.js > docs/api.md",
     "dist": "rollup -c"
   },
   "devDependencies": {
