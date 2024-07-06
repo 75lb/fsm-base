@@ -20,7 +20,7 @@
     "load-anywhere"
   ],
   "engines": {
-    "node": ">=14"
+    "node": ">=12.17"
   },
   "files": [
     "index.js",
@@ -33,9 +33,9 @@
     "dist": "rollup -c"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^15.0.1",
-    "jsdoc-to-markdown": "^8.0.0",
-    "rollup": "^3.19.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "jsdoc-to-markdown": "^8.0.1",
+    "rollup": "^4.18.0",
     "test-runner": "^0.10.1"
   },
   "dependencies": {

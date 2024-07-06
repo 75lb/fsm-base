@@ -60,10 +60,10 @@ anotherClient.state = 'connecting'
         * _instance_
             * [.state](#module_fsm-base--StateMachine+state) : <code>string</code>
             * [._initStateMachine(initialState, validMoves)](#module_fsm-base--StateMachine+_initStateMachine)
-            * [._onStateChange(state, prevState)](#module_fsm-base--StateMachine+_onStateChange)
+            * [.onStateChange(state, prevState)](#module_fsm-base--StateMachine+onStateChange)
             * [.resetState()](#module_fsm-base--StateMachine+resetState)
         * _static_
-            * [.mixInto(target, initialState, validMoves)](#module_fsm-base--StateMachine.mixInto)
+            * [.mixInto(target)](#module_fsm-base--StateMachine.mixInto)
 
 <a name="exp_module_fsm-base--StateMachine"></a>
 
@@ -89,9 +89,9 @@ The current state
 | initialState | <code>string</code> | Initial state, e.g. 'pending'. |
 | validMoves | <code>Array.&lt;object&gt;</code> | Array of valid move rules. |
 
-<a name="module_fsm-base--StateMachine+_onStateChange"></a>
+<a name="module_fsm-base--StateMachine+onStateChange"></a>
 
-#### stateMachine.\_onStateChange(state, prevState)
+#### stateMachine.onStateChange(state, prevState)
 Invoked on every state change
 
 **Kind**: instance method of [<code>StateMachine</code>](#exp_module_fsm-base--StateMachine)  
@@ -109,16 +109,14 @@ Reset to initial state.
 **Kind**: instance method of [<code>StateMachine</code>](#exp_module_fsm-base--StateMachine)  
 <a name="module_fsm-base--StateMachine.mixInto"></a>
 
-#### StateMachine.mixInto(target, initialState, validMoves)
+#### StateMachine.mixInto(target)
 **Kind**: static method of [<code>StateMachine</code>](#exp_module_fsm-base--StateMachine)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| target | <code>object</code> | The target to receive the state machine behaviour. |
-| initialState | <code>string</code> | Initial state, e.g. 'pending'. |
-| validMoves | <code>Array.&lt;object&gt;</code> | Array of valid move rules. |
+| target | <code>object</code> | The target class (or constructor function) to receive the state machine behaviour. |
 
 
 * * *
 
-&copy; 2015-23 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).
+&copy; 2015-24 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).

@@ -69,17 +69,15 @@ const _validMoves = new WeakMap();
  */
 class StateMachine {
   /**
-   * @param {object} - The target to receive the state machine behaviour.
-   * @param {string} - Initial state, e.g. 'pending'.
-   * @param {object[]} - Array of valid move rules.
+   * @param {object} - The target class (or constructor function) to receive the state machine behaviour.
    */
-  static mixInto (target, initialState, validMoves) {
-    Object.defineProperty(target, 'state', Object.getOwnPropertyDescriptor(this.prototype, 'state'));
-    Object.defineProperty(target, 'resetState', Object.getOwnPropertyDescriptor(this.prototype, 'resetState'));
-    Object.defineProperty(target, '_initStateMachine', Object.getOwnPropertyDescriptor(this.prototype, '_initStateMachine'));
-    Object.defineProperty(target, 'onStateChange', Object.getOwnPropertyDescriptor(this.prototype, 'onStateChange'));
-    if (validMoves) {
-      target._initStateMachine(initialState, validMoves);
+  static mixInto (target) {
+    if (target.prototype === undefined) {
+      throw new Error('Supply a class or constructor function')
+    }
+    for (const methodName of ['state', 'resetState', '_initStateMachine', 'onStateChange']) {
+      /* ClientBaseAppsScript required methods to be written to the target.prototype - instance properties might not need writing to the target.prototype */
+      Object.defineProperty(target.prototype, methodName, Object.getOwnPropertyDescriptor(this.prototype, methodName));
     }
     return target
   }
@@ -118,7 +116,7 @@ class StateMachine {
     /* nothing to do */
     if (this.state === state) return
 
-    const validTo = _validMoves.get(this).some(move => move.to.indexOf(state) > -1);
+    const validTo = _validMoves.get(this).some(move => move.to.includes(state));
     if (!validTo) {
       const err = new Error(`Invalid state: ${state}`);
       err.name = 'INVALID_MOVE';

@@ -14,17 +14,15 @@ const _validMoves = new WeakMap()
  */
 class StateMachine {
   /**
-   * @param {object} - The target to receive the state machine behaviour.
-   * @param {string} - Initial state, e.g. 'pending'.
-   * @param {object[]} - Array of valid move rules.
+   * @param {object} - The target class (or constructor function) to receive the state machine behaviour.
    */
-  static mixInto (target, initialState, validMoves) {
+  static mixInto (target) {
+    if (target.prototype === undefined) {
+      throw new Error('Supply a class or constructor function')
+    }
     for (const methodName of ['state', 'resetState', '_initStateMachine', 'onStateChange']) {
       /* ClientBaseAppsScript required methods to be written to the target.prototype - instance properties might not need writing to the target.prototype */
       Object.defineProperty(target.prototype, methodName, Object.getOwnPropertyDescriptor(this.prototype, methodName))
-    }
-    if (validMoves) {
-      target._initStateMachine(initialState, validMoves)
     }
     return target
   }

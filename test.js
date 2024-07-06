@@ -5,8 +5,9 @@ import { strict as a } from 'node:assert'
 const tom = new TestRunner.Tom()
 
 tom.test('valid moves', function () {
-  const target = {}
-  const sm = StateMachine.mixInto(target)
+  class TestClass {}
+  StateMachine.mixInto(TestClass)
+  const sm = new TestClass()
   sm._initStateMachine('offline', [
     { from: 'offline', to: 'connecting' },
     { from: 'connecting', to: 'online' },
@@ -23,17 +24,18 @@ tom.test('valid moves', function () {
   sm.state = 'connecting' // should not trigger events again
   a.equal(sm.state, 'connecting')
   sm.state = 'online'
-  sm.state = 'offline'
+  sm.state = 'offline' // valid state move
   a.deepEqual(actuals, [
-    'connecting',   'offline',
+    'connecting', 'offline',
     'online', 'connecting',
-    'offline',  'online'
+    'offline', 'online'
   ])
-  a.equal(sm, target)
 })
 
 tom.test('multiple from 1', function () {
-  const sm = StateMachine.mixInto({})
+  class TestClass {}
+  StateMachine.mixInto(TestClass)
+  const sm = new TestClass()
   sm._initStateMachine(null, [
     { from: null, to: 'one' },
     { from: 'one', to: 'two' },
@@ -45,7 +47,9 @@ tom.test('multiple from 1', function () {
 })
 
 tom.test('multiple from 2', function () {
-  const sm = StateMachine.mixInto({})
+  class TestClass {}
+  StateMachine.mixInto(TestClass)
+  const sm = new TestClass()
   sm._initStateMachine(null, [
     { from: null, to: 'one' },
     { from: 'one', to: 'two' },
@@ -59,7 +63,9 @@ tom.test('multiple from 2', function () {
 })
 
 tom.test('invalid move', function () {
-  const sm = StateMachine.mixInto({})
+  class TestClass {}
+  StateMachine.mixInto(TestClass)
+  const sm = new TestClass()
   sm._initStateMachine(null, [
     { from: null, to: 'one' },
     { from: 'one', to: 'two' },
@@ -82,7 +88,10 @@ tom.test('invalid move', function () {
 })
 
 tom.test('invalid state', function () {
-  const sm = StateMachine.mixInto({}, null, [
+  class TestClass {}
+  StateMachine.mixInto(TestClass)
+  const sm = new TestClass()
+  sm._initStateMachine(null, [
     { from: null, to: 'one' }
   ])
 
@@ -102,7 +111,10 @@ tom.test('invalid state', function () {
 })
 
 tom.test('resetState(): returns to initialState', function () {
-  const sm = StateMachine.mixInto({}, 'one', [
+  class TestClass {}
+  StateMachine.mixInto(TestClass)
+  const sm = new TestClass()
+  sm._initStateMachine('one', [
     { from: 'one', to: 'two' }
   ])
   const actuals = []
